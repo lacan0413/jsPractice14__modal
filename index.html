@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <style>
+    body,
+    .image-box,
+    .image-box__text,
+    .modals {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    body {
+      min-height: 100vh;
+      background-image: linear-gradient(rgba(0, 0, 0, 1) 1px, transparent 0),
+        linear-gradient(90deg, rgba(0, 0, 0, 0.25) 1px, transparent 0),
+        linear-gradient(90deg, rgba(0, 0, 0, 1) 1px, transparent 0);
+      background-size: 50px 90px, 50px 90px, 100px 100px;
+    }
+
+    .image-box {
+      position: relative;
+      overflow: hidden;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .image-box__text {
+      position: absolute;
+      top: 0;
+      left: 0;
+      flex-direction: column;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(95, 158, 160, 0.4);
+      color: white;
+      transition: transform 300ms;
+      transform: translateX(-100%) rotateZ(90deg);
+    }
+
+    .image-box img {
+      min-width: 100%;
+      min-height: 100%;
+      transition: transform 300ms;
+    }
+
+    .image-box:hover img {
+      transform: scale(1.2) rotateZ(2deg);
+    }
+
+    .image-box:hover>.image-box__text {
+      transform: none;
+    }
+
+    .modals {
+      position: fixed;
+      top: 0;
+      left: 0;
+      visibility: hidden;
+      overflow: auto;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 300ms, visibility 300ms;
+    }
+
+    .modals.active {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .modals__mask {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.3);
+    }
+
+    .modals__container {
+      position: relative;
+      padding: 20px;
+      width: 70%;
+      border-radius: 20px;
+      background-color: white;
+      transition: transform 300ms;
+      transform: scale(0);
+    }
+
+    .modals.active .modals__container {
+      transform: scale(1);
+    }
+
+    .modals__container img {
+      width: 100%;
+    }
+
+    .image-list {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .image-list>li {
+      flex: 1;
+      flex-basis: 220px;
+      margin: 10px;
+      min-width: 30%;
+    }
+  </style>
+</head>
+
+<body>
+
+  <ul class="image-list">
+    <li class="image-box">
+      <img src='https://picsum.photos/400/300?random=1' alt='picture'>
+      <section class="image-box__text">
+        <h2>Lorem, ipsum</h2>
+        <span>amet consectetur adipisicing elit.</span>
+      </section>
+    </li>
+    <li class="image-box">
+      <img src='https://picsum.photos/400/300?random=2' alt='picture'>
+      <section class="image-box__text">
+        <h2>Lorem, ipsum</h2>
+        <span>amet consectetur adipisicing elit.</span>
+      </section>
+    </li>
+    <li class="image-box">
+      <img src='https://picsum.photos/400/300?random=3' alt='picture'>
+      <section class="image-box__text">
+        <h2>Lorem, ipsum</h2>
+        <span>amet consectetur adipisicing elit.</span>
+      </section>
+    </li>
+    <li class="image-box">
+      <img src='https://picsum.photos/400/300?random=4' alt='picture'>
+      <section class="image-box__text">
+        <h2>Lorem, ipsum</h2>
+        <span>amet consectetur adipisicing elit.</span>
+      </section>
+    </li>
+    <li class="image-box">
+      <img src='https://picsum.photos/400/300?random=5' alt='picture'>
+      <section class="image-box__text">
+        <h2>Lorem, ipsum</h2>
+        <span>amet consectetur adipisicing elit.</span>
+      </section>
+    </li>
+    <li class="image-box">
+      <img src='https://picsum.photos/400/300?random=6' alt='picture'>
+      <section class="image-box__text">
+        <h2>Lorem, ipsum</h2>
+        <span>amet consectetur adipisicing elit.</span>
+      </section>
+    </li>
+  </ul>
+
+
+
+  <div class="modals">
+    <div class="modals__mask"></div>
+    <div class="modals__container">
+      <img src='' alt='picture'>
+    </div>
+  </div>
+
+
+  <script>
+    let imageBox = document.querySelectorAll('.image-box');
+    let modals = document.querySelector('.modals');
+    let modalsMask = document.querySelector('.modals__mask');
+    let modalsCover = document.querySelector('.modals img');
+
+
+    //imageBox Array (using forEach)
+    imageBox.forEach(function (element) {
+      //取得每個觸發區塊內的 img src
+      let coverSrc = element.querySelector('img').src;
+
+      //增加每個觸發區塊的點擊事件
+      element.addEventListener('click', function () {
+        //幫彈出視窗增加active樣式
+        modals.classList.toggle('active');
+        //修改彈出視窗內圖片的src字串
+        modalsCover.src = coverSrc;
+      });
+    });
+
+    //增加遮罩區塊的點擊事件，讓他在點擊時刪除彈出視窗的active樣式
+    modalsMask.addEventListener('click', function () {
+      modals.classList.toggle('active');
+    });
+  </script>
+</body>
+
+</html>
